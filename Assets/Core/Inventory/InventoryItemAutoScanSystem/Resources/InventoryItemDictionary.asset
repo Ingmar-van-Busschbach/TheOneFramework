@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: InventoryItemDictionary
   m_EditorClassIdentifier: 
   items:
+  - {fileID: 11400000, guid: f5b0b9111454db2439071b46614afd32, type: 2}
+  - {fileID: 11400000, guid: 24ab94c07458e5448a853c7df38ed58e, type: 2}
   - {fileID: 11400000, guid: 631438d0f79a6419a9a2d543f8cb1527, type: 2}
   - {fileID: 11400000, guid: f9891206ffb424246ae4bb22fa7fef34, type: 2}
+  - {fileID: 11400000, guid: 551a5f7d3572b8d43b26fad870d3802e, type: 2}
   - {fileID: 11400000, guid: 60e820c1dfa9f474493f834122e98f43, type: 2}
+  - {fileID: 11400000, guid: 1baccfbfd930da542975b7085b67c23d, type: 2}
