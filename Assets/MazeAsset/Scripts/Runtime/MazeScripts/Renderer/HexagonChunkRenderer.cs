@@ -27,7 +27,7 @@ namespace MazeAsset.MazeGenerator
 
         (GameObject, GameObject) IChunkRenderer.RenderChunk(
             int X, int Y, int numberFloor, WallVisibilityStatus wallVisibilityStatus,
-            MazeData mazeData, GameObject parent, GameObject elevatorParent, bool makeRoof, IElevatorPlatform elevator, GameObject wallPrefab)
+            MazeData mazeData, GameObject parent, GameObject elevatorParent, bool makeRoof, IElevatorPlatform elevator, GameObject wallPrefab, GameObject floorPrefab)
         {
             var ChunkSize = _dimensionsService.ChunkSize;
             (int maxChunkX, int maxChunkZ) = _dimensionsService.GetMaxChunks(numberFloor, mazeData);
@@ -44,7 +44,7 @@ namespace MazeAsset.MazeGenerator
             }
             RenderVerticalWalls(w, h, X, Y, maxChunkX, maxChunkZ, offsetX, offsetY, wallVisibilityStatus, rootWalls.transform, mazeData, numberFloor, wallPrefab);
             RenderHorizontalWalls(w, h, X, Y, maxChunkZ, offsetX, offsetY, wallVisibilityStatus, rootWalls.transform, mazeData, numberFloor, wallPrefab);
-            RenderFloorAndRoof(w, h, makeRoof, offsetX, offsetY, wallVisibilityStatus, rootWalls.transform, rootElevator?.transform, mazeData, numberFloor, elevator, wallPrefab);
+            RenderFloorAndRoof(w, h, makeRoof, offsetX, offsetY, wallVisibilityStatus, rootWalls.transform, rootElevator?.transform, mazeData, numberFloor, elevator, floorPrefab);
 
             return (rootWalls, rootElevator);
         }

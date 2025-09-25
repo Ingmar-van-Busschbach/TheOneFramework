@@ -25,7 +25,8 @@ namespace MazeAsset.MazeGenerator
                 rootForElevator,
                 mazeManager.makeRoof,
                 mazeManager.InterfaceService.GetElevatorPlatform(),
-                mazeManager.wallPrefab
+                mazeManager.wallPrefab,
+                mazeManager.floorPrefab
             );
 
             AddChunkToManagers(chunks, x, y, z, edit);
@@ -50,7 +51,8 @@ namespace MazeAsset.MazeGenerator
                     mazeManager.rootElevator,
                     mazeManager.makeRoof,
                     mazeManager.InterfaceService.GetElevatorPlatform(),
-                    mazeManager.wallPrefab
+                    mazeManager.wallPrefab,
+                    mazeManager.floorPrefab
                 );
 
                 AddChunkToManagers(chunks, x, y, z, edit: false);
@@ -70,7 +72,8 @@ namespace MazeAsset.MazeGenerator
                         null,
                         mazeManager.makeRoof,
                         mazeManager.InterfaceService.GetElevatorPlatform(),
-                        mazeManager.wallPrefab
+                        mazeManager.wallPrefab,
+                        mazeManager.floorPrefab
                     );
 
                     AddChunkToManagers(chunksEdit, x, y, z, edit: true);

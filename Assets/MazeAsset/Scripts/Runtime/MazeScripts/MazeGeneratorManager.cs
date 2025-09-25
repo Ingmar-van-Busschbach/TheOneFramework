@@ -29,6 +29,7 @@ namespace MazeAsset.MazeGenerator
         [SerializeField] internal bool makeRoof;
         [SerializeField, HideInInspector] public MazeData mazeData;
         [SerializeField] internal GameObject wallPrefab;
+        [SerializeField] internal GameObject floorPrefab;
         [SerializeField] public MethodGenerateEnum methodGenerate;
         [SerializeField, HideInInspector] internal ShapeCellEnum shapeCell;
         [SerializeField] internal ShapeCellEnum shapeMaze;
