@@ -1,9 +1,11 @@
 ﻿title: Start
 ---
 Welcome, to Mazes and Riddles!
+You are a member of the local scouting club.
 Your goal is to get to the end of the maze.
 The maze has multiple colored doors, for which you must find the corresponding colored key!
 To get a key, you must answer a riddle given to you by a colored instructor!
+The instructors have hidden inside the maze.
 Go find the instructor!
 <<declare $currentRiddle = "BatteryRiddle">>
 <<declare $currentInstructor = "NoInstructor">>
@@ -20,13 +22,15 @@ Go find the instructor!
 title: BlueInstructor
 ---
 <<set $currentInstructor to "BlueInstructor">>
-I am the Blue Instructor.
 <<if $answerredBlueCorrectly == "true">>
-    You already got my key!
-    I have no more riddles for you.
-    Good luck finding the other instructors!
+    Meryl: Hello again!
+    Meryl: You already got my key!
+    Meryl: I have no more riddles for you.
+    Meryl: Good luck finding the other instructors!
 <<else>>
-    I have a riddle for you.
+    Meryl: Hello!
+    Meryl: I am the Blue Instructor.
+    Meryl: If you get this upcoming riddle correct, I'll give you the blue key.
     <<jump SelectRiddle>>
 <<endif>>
 ===
@@ -34,13 +38,14 @@ I am the Blue Instructor.
 title: GreenInstructor
 ---
 <<set $currentInstructor to "GreenInstructor">>
-I am the Green Instructor.
+Jan: Hey-Hi! You found me!
 <<if $answerredGreenCorrectly == "true">>
-    You already got my key!
-    I have no more riddles for you.
-    Good luck finding the other instructors!
+    Jan: Oh, it's you again!
+    Jan: I have no more riddles for you, you know.
+    Jan: Go find the other instructors!
 <<else>>
-    I have a riddle for you.
+    Jan: Yes, I am the Green Instructor.
+    Jan: I have a little riddle for you.
     <<jump SelectRiddle>>
 <<endif>>
 ===
@@ -48,13 +53,14 @@ I am the Green Instructor.
 title: YellowInstructor
 ---
 <<set $currentInstructor to "YellowInstructor">>
-I am the Yellow Instructor.
+Dave: Oh, it's you! Hello there.
 <<if $answerredYellowCorrectly == "true">>
-    You already got my key!
-    I have no more riddles for you.
-    Good luck finding the other instructors!
+    Dave: You already got my key!
+    Dave: I have no more riddles for you.
+    Dave: Good luck finding the other instructors!
 <<else>>
-    I have a riddle for you.
+    Dave: I am the Yellow Instructor today.
+    Dave: Are you ready for this riddle?
     <<jump SelectRiddle>>
 <<endif>>
 ===
@@ -62,13 +68,14 @@ I am the Yellow Instructor.
 title: RedInstructor
 ---
 <<set $currentInstructor to "RedInstructor">>
-I am the Red Instructor.
 <<if $answerredRedCorrectly == "true">>
-    You already got my key!
-    I have no more riddles for you.
-    Good luck finding the other instructors!
+    Gerald: You already got my key, did you forget?
+    Gerald: Go find the other instructors or something.
 <<else>>
-    I have a riddle for you.
+    Gerald: Hmph. Took you long enough.
+    Gerald: Did you get lost or something?
+    Gerald: Yes, yes... I am the Red Instructor.
+    Gerald: You better be ready for this riddle.
     <<jump SelectRiddle>>
 <<endif>>
 ===
@@ -142,7 +149,7 @@ I never ask questions, but I am always answered, what am I?
 
 title: FireRiddle
 ---
-I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?
+    I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?
 <<set $currentRiddle to "MirrorRiddle">>
 ->A cloud
     <<jump WrongAnswer>>
@@ -166,7 +173,7 @@ I make two people out of one. What am I?
 
 title: BreathRiddle
 ---
-I make two people out of one. What am I?
+I am as light as a feather, yet no man can hold me for long. What am I?
 <<set $currentRiddle to "ClockRiddle">>
 ->A breath
     <<jump CorrectAnswer>>
@@ -254,30 +261,52 @@ I have cities, but no houses; mountains, but no snow; water, but no fish. What a
 
 title: CorrectAnswer
 ---
-That was correct!
-Here is a key!
+
 <<if $currentInstructor == "BlueInstructor">>
+    Meryl: That was correct.
+    Meryl: Here is the key I promised.
+    You received the Blue Key!
     <<give_item "Player" "BlueKey">>
     <<set $answerredBlueCorrectly to "true">>
-    You received the Blue Key!
 <<elseif $currentInstructor == "GreenInstructor">>
+    Jan: That is absolutely correct!
+    Jan: Well done!
+    Jan: Here's a little somethin.
+    You received the Green Key!
     <<give_item "Player" "GreenKey">>
     <<set $answerredGreenCorrectly to "true">>
-    You received the Green Key!
 <<elseif $currentInstructor == "YellowInstructor">>
+    Dave: Good job!
+    Dave: That was correct.
+    Dave: Here is the key.
+    You received the Yellow Key!
     <<give_item "Player" "YellowKey">>
     <<set $answerredYellowCorrectly to "true">>
-    You received the Yellow Key!
 <<elseif $currentInstructor == "RedInstructor">>
+    Gerald: I guess you know something after all.
+    Gerald: Here. Now don't waste my time further.
+    You received the Red Key!
     <<give_item "Player" "RedKey">>
     <<set $answerredRedCorrectly to "true">>
-    You received the Red Key!
 <<endif>>
 ===
 
 title: WrongAnswer
 ---
-That was wrong! I have another riddle for you to try again on.
+<<if $currentInstructor == "BlueInstructor">>
+    Meryl: That was wrong!
+    Meryl: I have another riddle for you to try again on.
+<<elseif $currentInstructor == "GreenInstructor">>
+    Jan: Uh-oh, that was unfortunately not correct.
+    Jan: I have another riddle for you to try again, though!
+<<elseif $currentInstructor == "YellowInstructor">>
+    Dave: Sorry, but that was wrong.
+    Dave: Here, please try again with this new riddle.
+<<elseif $currentInstructor == "RedInstructor">>
+    Gerald: No, no, no. That was wrong.
+    Gerald: Try. Again.
+<<endif>>
+
 <<jump SelectRiddle>>
 ===
 
@@ -343,4 +372,16 @@ You approach the Red Door.
     You seem to need a Red Key to open this door.
     Maybe you can get it from the Red Instructor?
 <<endif>>
+===
+
+//------------------------------------------------------------------------
+//                                  End Level
+//------------------------------------------------------------------------
+
+title: EndLevel
+---
+Congratulations!
+You made it to the end.
+You have solved all riddles and collected all keys!
+You have earned your Navigation Badge!
 ===
