@@ -58,6 +58,17 @@ title: YellowInstructor
 <<set $currentInstructor to "YellowInstructor">>
 Dave: Oh, it's you! Hello there.
 <<if $answerredYellowCorrectly == "true">>
+    <<if $witnessedConflict == "true">>
+        <<if has_item("Player", "Snickers")>>
+            Dave: You already got my key!
+            Dave: I have no more riddles for you.
+            Dave: Good luck finding the other instructors!
+        <<else>>
+            ->Ask about Gerald.
+                <<jump YellowInstructorConflict>>
+            ->Ask for the riddle.
+        <<endif>>
+    <<endif>>
     Dave: You already got my key!
     Dave: I have no more riddles for you.
     Dave: Good luck finding the other instructors!
@@ -86,8 +97,11 @@ Dave: Here's a snickers.
 <<give_item "Player" "Snickers">>
 You received a snickers bar.
 Dave: Give it to Gerald, will you?
+<<if $answerredYellowCorrectly == "true">>
+<<else>>
 Dave: Oh, and let's not forget about the riddle. Here it is.
 <<jump SelectRiddle>>
+<<endif>>
 ===
 
 title: RedInstructor
