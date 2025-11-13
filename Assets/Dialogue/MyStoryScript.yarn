@@ -1,13 +1,13 @@
 ﻿title: Start
 ---
-Welcome, to Mazes and Riddles!
-You are a member of the local scouting club "The Cub Club".
-Today you're on an excursion to a maze.
-Your goal is to get to the end of the maze.
-The maze has multiple colored doors, for which you must find the corresponding colored key!
-To get a key, you must answer a riddle given to you by a colored instructor!
-The instructors have hidden inside the maze.
-Go find the instructor!
+Welcome, to <i>Mazes and Riddles!</i>
+You are a member of the local scouting club <i>The Cub Club</i>.
+Today you're on an <b>excursion</b> to a maze.
+Your goal is to get to the <b>end</b> of the maze.
+The maze has multiple <b>colored doors</b>, for which you must find the corresponding <b>colored key</b>!
+To get a key, you must answer a <b>riddle</b> given to you by a <b>colored instructor</b>!
+The instructors are <b>hidden</b> inside the maze.
+Go <b>find</b> the instructor!
 <<declare $currentRiddle = "BatteryRiddle">>
 <<declare $currentInstructor = "NoInstructor">>
 <<declare $answerredBlueCorrectly = "false">>
@@ -440,9 +440,11 @@ title: BlueDoor
 You approach the Blue Door.
 <<if has_item("Player", "BlueKey")>>
     You have the key!
+    <<run_command "BlueDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "BlueDoor" "OpenDoor">>
     <<take_item "Player" "BlueKey">>
-    The door opens.
+    The blue door opens.
+    The next door is the green door.
 <<else>>
     The door is locked.
     You seem to need a Blue Key to open this door.
@@ -455,9 +457,11 @@ title: GreenDoor
 You approach the Green Door.
 <<if has_item("Player", "GreenKey")>>
     You have the key!
+    <<run_command "GreenDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "GreenDoor" "OpenDoor">>
     <<take_item "Player" "GreenKey">>
-    The door opens.
+    The green door opens.
+    The next door is the yellow door.
 <<else>>
     The door is locked.
     You seem to need a Green Key to open this door.
@@ -470,9 +474,11 @@ title: YellowDoor
 You approach the Yellow Door.
 <<if has_item("Player", "YellowKey")>>
     You have the key!
+    <<run_command "YellowDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "YellowDoor" "OpenDoor">>
     <<take_item "Player" "YellowKey">>
-    The door opens.
+    The yellow door opens.
+    The next door is the red door.
 <<else>>
     The door is locked.
     You seem to need a Yellow Key to open this door.
@@ -485,9 +491,11 @@ title: RedDoor
 You approach the Red Door.
 <<if has_item("Player", "RedKey")>>
     You have the key!
+    <<run_command "RedDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "RedDoor" "OpenDoor">>
     <<take_item "Player" "RedKey">>
-    The door opens.
+    The red door opens.
+    There is no more doors left, find the end!
 <<else>>
     The door is locked.
     You seem to need a Red Key to open this door.
@@ -501,7 +509,7 @@ You approach the Red Door.
 
 title: Conflict
 ---
-When you approach the doors, you hear faint shouting in the distance.
+When you approach the red door, you hear faint shouting in the distance.
 Gerald: I'm done.
 Dave: Don't be too hasty, Gerald.
 Gerald: No. These kids just can't get anything right and it's so frustrating, Dave!
@@ -513,6 +521,16 @@ It's quiet for a moment.
 Gerald: ...
 Gerald: Fine. But I am going to quit after this.
 <<set $witnessedConflict to "true">>
+===
+
+//------------------------------------------------------------------------
+//                                  Hint
+//------------------------------------------------------------------------
+
+title: Hint
+---
+After you went through the green door, you thought you saw someone walking towards the red door...
+Maybe you should find the red door?
 ===
 
 //------------------------------------------------------------------------
