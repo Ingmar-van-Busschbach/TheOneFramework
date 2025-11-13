@@ -26,13 +26,20 @@ title: BlueInstructor
 ---
 <<set $currentInstructor to "BlueInstructor">>
 <<if $answerredBlueCorrectly == "true">>
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Hello again!
+    <<run_command "BlueNPCDeny" "SoundPlayer" "PlaySound">>
     Meryl: You already got my key!
+    <<run_command "BlueNPCDeny" "SoundPlayer" "PlaySound">>
     Meryl: I have no more riddles for you.
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Good luck finding the other instructors!
 <<else>>
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Hello!
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: I am the Blue Instructor.
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: If you get this upcoming riddle correct, I'll give you the blue key.
     <<jump SelectRiddle>>
 <<endif>>
@@ -235,6 +242,7 @@ title: VeryHardRiddle
 
 title: BatteryRiddle
 ---
+<<run_command "BlueNPCQuestion" "SoundPlayer" "PlaySound">>
 I have no life, but I can die, what am I?
 <<set $currentRiddle to "DoorbellRiddle">>
 ->A battery
@@ -247,6 +255,7 @@ I have no life, but I can die, what am I?
 
 title: DoorbellRiddle
 ---
+<<run_command "BlueNPCQuestion" "SoundPlayer" "PlaySound">>
 I never ask questions, but I am always answered, what am I?
 <<set $currentRiddle to "FireRiddle">>
 ->A call
@@ -263,6 +272,7 @@ I never ask questions, but I am always answered, what am I?
 
 title: ClockRiddle
 ---
+<<run_command "GreenNPCQuestion" "SoundPlayer" "PlaySound">>
 I have two hands, but I can not scratch myself. Even when dead, I am right twice a day. What am I?
 <<set $currentRiddle to "SecretRiddle">>
 ->A clock
@@ -275,6 +285,7 @@ I have two hands, but I can not scratch myself. Even when dead, I am right twice
 
 title: SecretRiddle
 ---
+<<run_command "GreenNPCQuestion" "SoundPlayer" "PlaySound">>
 The more of me you share, the less of me you have. What am I?
 <<set $currentRiddle to "CloudRiddle">>
 ->Happiness
@@ -287,6 +298,7 @@ The more of me you share, the less of me you have. What am I?
 
 title: CloudRiddle
 ---
+<<run_command "GreenNPCQuestion" "SoundPlayer" "PlaySound">>
 I can fly without wings, cry without eyes, and whenever I go, darkness flies. What am I?
 <<set $currentRiddle to "MapRiddle">>
 ->A bird
@@ -299,6 +311,7 @@ I can fly without wings, cry without eyes, and whenever I go, darkness flies. Wh
 
 title: MapRiddle
 ---
+<<run_command "GreenNPCQuestion" "SoundPlayer" "PlaySound">>
 I have cities, but no houses; mountains, but no snow; water, but no fish. What am I?
 <<set $currentRiddle to "ClockRiddle">>
 ->A desert
@@ -315,6 +328,7 @@ I have cities, but no houses; mountains, but no snow; water, but no fish. What a
 
 title: FireRiddle
 ---
+<<run_command "YellowNPCQuestion" "SoundPlayer" "PlaySound">>
     I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?
 <<set $currentRiddle to "MirrorRiddle">>
 ->A cloud
@@ -327,6 +341,7 @@ title: FireRiddle
 
 title: MirrorRiddle
 ---
+<<run_command "YellowNPCQuestion" "SoundPlayer" "PlaySound">>
 I make two people out of one. What am I?
 <<set $currentRiddle to "BreathRiddle">>
 ->A mask
@@ -339,6 +354,7 @@ I make two people out of one. What am I?
 
 title: BreathRiddle
 ---
+<<run_command "YellowNPCQuestion" "SoundPlayer" "PlaySound">>
 I am as light as a feather, yet no man can hold me for long. What am I?
 <<set $currentRiddle to "HoleRiddle">>
 ->A breath
@@ -351,6 +367,7 @@ I am as light as a feather, yet no man can hold me for long. What am I?
 
 title: HoleRiddle
 ---
+<<run_command "YellowNPCQuestion" "SoundPlayer" "PlaySound">>
 The more you take from me, the bigger I get. What am I?
 <<set $currentRiddle to "FireRiddle">>
 ->A hole
@@ -367,6 +384,7 @@ The more you take from me, the bigger I get. What am I?
 
 title: ERiddle
 ---
+<<run_command "RedNPCQuestion" "SoundPlayer" "PlaySound">>
 I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?
 <<set $currentRiddle to "ERiddle">>
 ->Darkness
@@ -385,28 +403,42 @@ title: CorrectAnswer
 ---
 
 <<if $currentInstructor == "BlueInstructor">>
+    <<run_command "BlueNPCApprove" "SoundPlayer" "PlaySound">>
     Meryl: That was correct.
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Here is the key I promised.
+    <<run_command "BlueNPCTrigger" "SoundPlayer" "PlaySound">>
     You received the Blue Key!
     <<give_item "Player" "BlueKey">>
     <<set $answerredBlueCorrectly to "true">>
 <<elseif $currentInstructor == "GreenInstructor">>
+    <<run_command "GreenNPCApprove" "SoundPlayer" "PlaySound">>
     Jan: That is absolutely correct!
+    <<run_command "GreenNPCApprove" "SoundPlayer" "PlaySound">>
     Jan: Well done!
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: Here's a little somethin.
+    <<run_command "GreenNPCTrigger" "SoundPlayer" "PlaySound">>
     You received the Green Key!
     <<give_item "Player" "GreenKey">>
     <<set $answerredGreenCorrectly to "true">>
 <<elseif $currentInstructor == "YellowInstructor">>
+    <<run_command "YellowNPCApprove" "SoundPlayer" "PlaySound">>
     Dave: Good job!
+    <<run_command "YellowNPCApprove" "SoundPlayer" "PlaySound">>
     Dave: That was correct.
+    <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
     Dave: Here is the key.
+    <<run_command "YellowNPCTrigger" "SoundPlayer" "PlaySound">>
     You received the Yellow Key!
     <<give_item "Player" "YellowKey">>
     <<set $answerredYellowCorrectly to "true">>
 <<elseif $currentInstructor == "RedInstructor">>
+    <<run_command "RedNPCApprove" "SoundPlayer" "PlaySound">>
     Gerald: I guess you know something after all.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Here. Now don't waste my time further.
+    <<run_command "RedNPCTrigger" "SoundPlayer" "PlaySound">>
     You received the Red Key!
     <<give_item "Player" "RedKey">>
     <<set $answerredRedCorrectly to "true">>
@@ -439,6 +471,7 @@ title: BlueDoor
 ---
 You approach the Blue Door.
 <<if has_item("Player", "BlueKey")>>
+    <<run_command "BlueDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "BlueDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "BlueDoor" "OpenDoor">>
@@ -456,6 +489,7 @@ title: GreenDoor
 ---
 You approach the Green Door.
 <<if has_item("Player", "GreenKey")>>
+    <<run_command "GreenDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "GreenDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "GreenDoor" "OpenDoor">>
@@ -473,6 +507,7 @@ title: YellowDoor
 ---
 You approach the Yellow Door.
 <<if has_item("Player", "YellowKey")>>
+    <<run_command "YellowDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "YellowDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "YellowDoor" "OpenDoor">>
@@ -490,6 +525,7 @@ title: RedDoor
 ---
 You approach the Red Door.
 <<if has_item("Player", "RedKey")>>
+    <<run_command "RedDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "RedDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "RedDoor" "OpenDoor">>
