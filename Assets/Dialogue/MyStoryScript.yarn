@@ -1,18 +1,21 @@
 ﻿title: Start
 ---
-Welcome, to Mazes and Riddles!
-You are a member of the local scouting club.
-Your goal is to get to the end of the maze.
-The maze has multiple colored doors, for which you must find the corresponding colored key!
-To get a key, you must answer a riddle given to you by a colored instructor!
-The instructors have hidden inside the maze.
-Go find the instructor!
+Welcome, to <i>Mazes and Riddles!</i>
+You are a member of the local scouting club <i>The Cub Club</i>.
+Today you're on an <b>excursion</b> to a maze.
+Your goal is to get to the <b>end</b> of the maze.
+The maze has multiple <b>colored doors</b>, for which you must find the corresponding <b>colored key</b>!
+To get a key, you must answer a <b>riddle</b> given to you by a <b>colored instructor</b>!
+The instructors are <b>hidden</b> inside the maze.
+Go <b>find</b> the instructor!
 <<declare $currentRiddle = "BatteryRiddle">>
 <<declare $currentInstructor = "NoInstructor">>
 <<declare $answerredBlueCorrectly = "false">>
 <<declare $answerredGreenCorrectly = "false">>
 <<declare $answerredYellowCorrectly = "false">>
 <<declare $answerredRedCorrectly = "false">>
+<<declare $witnessedConflict = "false">>
+<<declare $resolvedConflict = "false">>
 ===
 
 //------------------------------------------------------------------------
@@ -55,29 +58,102 @@ title: YellowInstructor
 <<set $currentInstructor to "YellowInstructor">>
 Dave: Oh, it's you! Hello there.
 <<if $answerredYellowCorrectly == "true">>
+    <<if $witnessedConflict == "true">>
+        <<if has_item("Player", "Snickers")>>
+            Dave: You already got my key!
+            Dave: I have no more riddles for you.
+            Dave: Good luck finding the other instructors!
+        <<else>>
+            ->Ask about Gerald.
+                <<jump YellowInstructorConflict>>
+            ->Ask for the riddle.
+        <<endif>>
+    <<endif>>
     Dave: You already got my key!
     Dave: I have no more riddles for you.
     Dave: Good luck finding the other instructors!
 <<else>>
-    Dave: I am the Yellow Instructor today.
-    Dave: Are you ready for this riddle?
-    <<jump SelectRiddle>>
+    <<if $witnessedConflict == "true">>
+        ->Ask about Gerald.
+            <<jump YellowInstructorConflict>>
+        ->Ask for the riddle.
+            Dave: Are you ready for this riddle?
+            <<jump SelectRiddle>>
+    <<else>>
+        Dave: I am the yellow instructor today.
+        Dave: Are you ready for this riddle?
+        <<jump SelectRiddle>>
+    <<endif>>
+<<endif>>
+===
+
+title: YellowInstructorConflict
+---
+Dave: Oh, did you overhear?
+Dave: I am so sorry about that.
+Dave: Gerald just isn't himself today.
+Dave: I have an idea.
+Dave: Here's a snickers.
+<<give_item "Player" "Snickers">>
+You received a snickers bar.
+Dave: Give it to Gerald, will you?
+<<if $answerredYellowCorrectly == "true">>
+<<else>>
+Dave: Oh, and let's not forget about the riddle. Here it is.
+<<jump SelectRiddle>>
 <<endif>>
 ===
 
 title: RedInstructor
 ---
-<<set $currentInstructor to "RedInstructor">>
-<<if $answerredRedCorrectly == "true">>
-    Gerald: You already got my key, did you forget?
-    Gerald: Go find the other instructors or something.
+<<if $resolvedConflict == "true">>
+    <<if $answerredRedCorrectly == "true">>
+        Gerald: Hey kid! You already got my key.
+        Gerald: Go get out of the maze, haha.
+    <<else>>
+        Gerald: Hey kid! Thanks again for the snickers.
+        Gerald: Are you ready for the riddle? This one is really difficult.
+        <<jump SelectRiddle>>
+    <<endif>>
 <<else>>
-    Gerald: Hmph. Took you long enough.
-    Gerald: Did you get lost or something?
-    Gerald: Yes, yes... I am the Red Instructor.
+    <<set $currentInstructor to "RedInstructor">>
+    <<if $answerredRedCorrectly == "true">>
+        Gerald: You already got my key, did you forget?
+        Gerald: Go find the other instructors or something.
+    <<else>>
+        Gerald: Hmph. Took you long enough.
+        Gerald: Did you get lost or something?
+        <<if has_item("Player", "Snickers")>>
+            ->Ask if Gerald is okay.
+                <<jump RedInstructorConflict>>
+            ->Apologize for getting lost and ask for the riddle.
+                Gerald: You better be ready for this riddle.
+                <<jump SelectRiddle>>
+        <<else>>
+            Gerald: You better be ready for this riddle.
+            <<jump SelectRiddle>>
+        <<endif>>
+    <<endif>>
+<<endif>>
+===
+
+title: RedInstructorConflict
+---
+Gerald: Yeah, why wouldn't I be fine?
+->Tell him Dave wanted him to have this Snickers
+    <<set $resolvedConflict to "true">>
+    Gerald: He thought of me?
+    Gerald: That's... So nice.
+    Gerald: Thank you.
+    Gerald: You know what, in return, you don't have to answer my riddle.
+    Gerald: Here's my key!
+    You received the Red Key!
+    <<give_item "Player" "RedKey">>
+    <<set $answerredRedCorrectly to "true">>
+    Gerald: Now go get out of the maze, haha.
+->Say nothing.
     Gerald: You better be ready for this riddle.
     <<jump SelectRiddle>>
-<<endif>>
 ===
 
 //------------------------------------------------------------------------
@@ -86,22 +162,33 @@ title: RedInstructor
 
 title: SelectRiddle
 ---
+<<if $currentInstructor == "BlueInstructor">>
+    <<jump EasyRiddle>>
+<<elseif $currentInstructor == "GreenInstructor">>
+    <<jump MediumRiddle>>
+<<elseif $currentInstructor == "YellowInstructor">>
+    <<jump HardRiddle>>
+<<elseif $currentInstructor == "RedInstructor">>
+    <<jump VeryHardRiddle>>
+<<endif>>
+===
+
+title: EasyRiddle
+---
 <<if $currentRiddle == "BatteryRiddle">>
     <<jump BatteryRiddle>>
 <<elseif $currentRiddle == "DoorbellRiddle">>
     <<jump DoorbellRiddle>>
-<<elseif $currentRiddle == "FireRiddle">>
-    <<jump FireRiddle>>
-<<elseif $currentRiddle == "MirrorRiddle">>
-    <<jump MirrorRiddle>>
-<<elseif $currentRiddle == "BreathRiddle">>
-    <<jump BreathRiddle>>
-<<elseif $currentRiddle == "ClockRiddle">>
+<<else>>
+    <<set $currentRiddle to "BatteryRiddle">>
+    <<jump EasyRiddle>>
+<<endif>>
+===
+
+title: MediumRiddle
+---
+<<if $currentRiddle == "ClockRiddle">>
     <<jump ClockRiddle>>
-<<elseif $currentRiddle == "ERiddle">>
-    <<jump ERiddle>>
-<<elseif $currentRiddle == "HoleRiddle">>
-    <<jump HoleRiddle>>
 <<elseif $currentRiddle == "SecretRiddle">>
     <<jump SecretRiddle>>
 <<elseif $currentRiddle == "CloudRiddle">>
@@ -109,18 +196,41 @@ title: SelectRiddle
 <<elseif $currentRiddle == "MapRiddle">>
     <<jump MapRiddle>>
 <<else>>
-    <<jump ResetRiddles>>
+    <<set $currentRiddle to "ClockRiddle">>
+    <<jump MediumRiddle>>
 <<endif>>
 ===
 
-title: ResetRiddles
+title: HardRiddle
 ---
-<<set $currentRiddle to "BatteryRiddle">>
-<<jump SelectRiddle>>
+<<if $currentRiddle == "FireRiddle">>
+    <<jump FireRiddle>>
+<<elseif $currentRiddle == "MirrorRiddle">>
+    <<jump MirrorRiddle>>
+<<elseif $currentRiddle == "BreathRiddle">>
+    <<jump BreathRiddle>>
+<<elseif $currentRiddle == "HoleRiddle">>
+    <<jump HoleRiddle>>
+<<else>>
+    <<set $currentRiddle to "FireRiddle">>
+    <<jump HardRiddle>>
+<<endif>>
 ===
 
+title: VeryHardRiddle
+---
+<<if $currentRiddle == "ERiddle">>
+    <<jump ERiddle>>
+<<else>>
+    <<set $currentRiddle to "ERiddle">>
+    <<jump VeryHardRiddle>>
+<<endif>>
+===
+
+
+
 //------------------------------------------------------------------------
-//                                  Riddles
+//                                  Easy Riddles
 //------------------------------------------------------------------------
 
 title: BatteryRiddle
@@ -131,91 +241,35 @@ I have no life, but I can die, what am I?
     <<jump CorrectAnswer>>
 ->A mug
     <<jump WrongAnswer>>
-->A shadow
-    <<jump WrongAnswer>>
+->A phone
+    <<jump CorrectAnswer>>
 ===
 
 title: DoorbellRiddle
 ---
 I never ask questions, but I am always answered, what am I?
 <<set $currentRiddle to "FireRiddle">>
+->A call
+    <<jump CorrectAnswer>>
 ->A doorbell
     <<jump CorrectAnswer>>
-->An echo
-    <<jump WrongAnswer>>
 ->A joke
     <<jump WrongAnswer>>
 ===
 
-title: FireRiddle
----
-    I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?
-<<set $currentRiddle to "MirrorRiddle">>
-->A cloud
-    <<jump WrongAnswer>>
-->A fire
-    <<jump CorrectAnswer>>
-->Rust
-    <<jump WrongAnswer>>
-===
-
-title: MirrorRiddle
----
-I make two people out of one. What am I?
-<<set $currentRiddle to "BreathRiddle">>
-->A mask
-    <<jump WrongAnswer>>
-->A mirror
-    <<jump CorrectAnswer>>
-->A shadow
-    <<jump WrongAnswer>>
-===
-
-title: BreathRiddle
----
-I am as light as a feather, yet no man can hold me for long. What am I?
-<<set $currentRiddle to "ClockRiddle">>
-->A breath
-    <<jump CorrectAnswer>>
-->A secret
-    <<jump WrongAnswer>>
-->Time
-    <<jump WrongAnswer>>
-===
+//------------------------------------------------------------------------
+//                                  Medium Riddles
+//------------------------------------------------------------------------
 
 title: ClockRiddle
 ---
 I have two hands, but I can not scratch myself. Even when dead, I am right twice a day. What am I?
-<<set $currentRiddle to "ERiddle">>
+<<set $currentRiddle to "SecretRiddle">>
 ->A clock
     <<jump CorrectAnswer>>
 ->A doll
     <<jump WrongAnswer>>
 ->A scarecrow
-    <<jump WrongAnswer>>
-===
-
-title: ERiddle
----
-I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?
-<<set $currentRiddle to "HoleRiddle">>
-->Darkness
-    <<jump WrongAnswer>>
-->Infinity
-    <<jump WrongAnswer>>
-->The letter E
-    <<jump CorrectAnswer>>
-===
-
-title: HoleRiddle
----
-The more you take from me, the bigger I get. What am I?
-<<set $currentRiddle to "SecretRiddle">>
-->A hole
-    <<jump CorrectAnswer>>
-->A pocket
-    <<jump WrongAnswer>>
-->Silence
     <<jump WrongAnswer>>
 ===
 
@@ -246,12 +300,80 @@ I can fly without wings, cry without eyes, and whenever I go, darkness flies. Wh
 title: MapRiddle
 ---
 I have cities, but no houses; mountains, but no snow; water, but no fish. What am I?
-<<set $currentRiddle to "BatteryRiddle">>
+<<set $currentRiddle to "ClockRiddle">>
 ->A desert
     <<jump WrongAnswer>>
 ->An illusion
     <<jump WrongAnswer>>
 ->A map
+    <<jump CorrectAnswer>>
+===
+
+//------------------------------------------------------------------------
+//                                  Hard Riddles
+//------------------------------------------------------------------------
+
+title: FireRiddle
+---
+    I am not alive, but I grow; I don't have lungs, but I need air; I don't have a mouth, but water kills me. What am I?
+<<set $currentRiddle to "MirrorRiddle">>
+->A cloud
+    <<jump WrongAnswer>>
+->A fire
+    <<jump CorrectAnswer>>
+->Rust
+    <<jump WrongAnswer>>
+===
+
+title: MirrorRiddle
+---
+I make two people out of one. What am I?
+<<set $currentRiddle to "BreathRiddle">>
+->A mask
+    <<jump WrongAnswer>>
+->A mirror
+    <<jump CorrectAnswer>>
+->A shadow
+    <<jump WrongAnswer>>
+===
+
+title: BreathRiddle
+---
+I am as light as a feather, yet no man can hold me for long. What am I?
+<<set $currentRiddle to "HoleRiddle">>
+->A breath
+    <<jump CorrectAnswer>>
+->A secret
+    <<jump WrongAnswer>>
+->Time
+    <<jump WrongAnswer>>
+===
+
+title: HoleRiddle
+---
+The more you take from me, the bigger I get. What am I?
+<<set $currentRiddle to "FireRiddle">>
+->A hole
+    <<jump CorrectAnswer>>
+->A pocket
+    <<jump WrongAnswer>>
+->Silence
+    <<jump WrongAnswer>>
+===
+
+//------------------------------------------------------------------------
+//                                  Very Hard Riddles
+//------------------------------------------------------------------------
+
+title: ERiddle
+---
+I am the beginning of the end, and the end of time and space. I am essential to creation, and I surround every place. What am I?
+<<set $currentRiddle to "ERiddle">>
+->Darkness
+    <<jump WrongAnswer>>
+->Infinity
+    <<jump WrongAnswer>>
+->The letter E
     <<jump CorrectAnswer>>
 ===
 
@@ -306,7 +428,6 @@ title: WrongAnswer
     Gerald: No, no, no. That was wrong.
     Gerald: Try. Again.
 <<endif>>
-
 <<jump SelectRiddle>>
 ===
 
@@ -319,9 +440,11 @@ title: BlueDoor
 You approach the Blue Door.
 <<if has_item("Player", "BlueKey")>>
     You have the key!
+    <<run_command "BlueDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "BlueDoor" "OpenDoor">>
     <<take_item "Player" "BlueKey">>
-    The door opens.
+    The blue door opens.
+    The next door is the green door.
 <<else>>
     The door is locked.
     You seem to need a Blue Key to open this door.
@@ -334,9 +457,11 @@ title: GreenDoor
 You approach the Green Door.
 <<if has_item("Player", "GreenKey")>>
     You have the key!
+    <<run_command "GreenDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "GreenDoor" "OpenDoor">>
     <<take_item "Player" "GreenKey">>
-    The door opens.
+    The green door opens.
+    The next door is the yellow door.
 <<else>>
     The door is locked.
     You seem to need a Green Key to open this door.
@@ -349,9 +474,11 @@ title: YellowDoor
 You approach the Yellow Door.
 <<if has_item("Player", "YellowKey")>>
     You have the key!
+    <<run_command "YellowDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "YellowDoor" "OpenDoor">>
     <<take_item "Player" "YellowKey">>
-    The door opens.
+    The yellow door opens.
+    The next door is the red door.
 <<else>>
     The door is locked.
     You seem to need a Yellow Key to open this door.
@@ -364,14 +491,46 @@ title: RedDoor
 You approach the Red Door.
 <<if has_item("Player", "RedKey")>>
     You have the key!
+    <<run_command "RedDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "RedDoor" "OpenDoor">>
     <<take_item "Player" "RedKey">>
-    The door opens.
+    The red door opens.
+    There is no more doors left, find the end!
 <<else>>
     The door is locked.
     You seem to need a Red Key to open this door.
     Maybe you can get it from the Red Instructor?
 <<endif>>
+===
+
+//------------------------------------------------------------------------
+//                                  Conflict
+//------------------------------------------------------------------------
+
+title: Conflict
+---
+When you approach the red door, you hear faint shouting in the distance.
+Gerald: I'm done.
+Dave: Don't be too hasty, Gerald.
+Gerald: No. These kids just can't get anything right and it's so frustrating, Dave!
+Dave: But you signed up for this event, and you have to see it through until all the kids-
+Gerald interrupts Dave.
+Gerald: What are you gonna do? Stop me from walking out of this maze?
+Dave: If I have to, I will. Now get back to your spot, Gerald.
+It's quiet for a moment.
+Gerald: ...
+Gerald: Fine. But I am going to quit after this.
+<<set $witnessedConflict to "true">>
+===
+
+//------------------------------------------------------------------------
+//                                  Hint
+//------------------------------------------------------------------------
+
+title: Hint
+---
+After you went through the green door, you thought you saw someone walking towards the red door...
+Maybe you should find the red door?
 ===
 
 //------------------------------------------------------------------------
@@ -384,4 +543,12 @@ Congratulations!
 You made it to the end.
 You have solved all riddles and collected all keys!
 You have earned your Navigation Badge!
+<<if $resolvedConflict == "true">>
+    Gerald was feeling much better after you gave him the snickers.
+    He gave you a special badge for helping another person.
+<<else>>
+    Sadly, since you didn't help Gerald, he ended up quitting the Cub Club.
+    After losing an instructor, the morale of the club dropped significantly.
+    This would be the last excursion you went on for a while.
+<<endif>>
 ===

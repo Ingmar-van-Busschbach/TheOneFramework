@@ -75,6 +75,8 @@ namespace StarterAssets
         [Tooltip("For locking the camera position on all axis")]
         public bool LockCameraPosition = false;
 
+        public float sensitivity = 1;
+
         // cinemachine
         private float _cinemachineTargetYaw;
         private float _cinemachineTargetPitch;
@@ -197,6 +199,7 @@ namespace StarterAssets
             {
                 //Don't multiply mouse input by Time.deltaTime;
                 float deltaTimeMultiplier = IsCurrentDeviceMouse ? 1.0f : Time.deltaTime;
+                deltaTimeMultiplier *= sensitivity;
 
                 _cinemachineTargetYaw += _input.look.x * deltaTimeMultiplier;
                 _cinemachineTargetPitch += _input.look.y * deltaTimeMultiplier;
@@ -301,17 +304,17 @@ namespace StarterAssets
                 }
 
                 // Jump
-                if (_input.jump && _jumpTimeoutDelta <= 0.0f)
-                {
-                    // the square root of H * -2 * G = how much velocity needed to reach desired height
-                    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
-
-                    // update animator if using character
-                    if (_hasAnimator)
-                    {
-                        _animator.SetBool(_animIDJump, true);
-                    }
-                }
+                //if (_input.jump && _jumpTimeoutDelta <= 0.0f)
+                //{
+                //    // the square root of H * -2 * G = how much velocity needed to reach desired height
+                //    _verticalVelocity = Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                //
+                //    // update animator if using character
+                //    if (_hasAnimator)
+                //    {
+                //        _animator.SetBool(_animIDJump, true);
+                //    }
+                //}
 
                 // jump timeout
                 if (_jumpTimeoutDelta >= 0.0f)
