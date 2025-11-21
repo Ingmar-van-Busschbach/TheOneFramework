@@ -2,7 +2,7 @@
 ---
 Welcome, to <i>Mazes and Riddles!</i>
 You are a member of the local scouting club <i>The Cub Club</i>.
-Today you're on an <b>excursion</b> to a maze.
+Today you're on an <b>excursion</b> to a castle's maze.
 Your goal is to get to the <b>end</b> of the maze.
 The maze has multiple <b>colored doors</b>, for which you must find the corresponding <b>colored key</b>!
 To get a key, you must answer a <b>riddle</b> given to you by a <b>colored instructor</b>!
@@ -48,13 +48,19 @@ title: BlueInstructor
 title: GreenInstructor
 ---
 <<set $currentInstructor to "GreenInstructor">>
+<<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
 Jan: Hey-Hi! You found me!
 <<if $answerredGreenCorrectly == "true">>
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: Oh, it's you again!
+    <<run_command "GreenNPCDeny" "SoundPlayer" "PlaySound">>
     Jan: I have no more riddles for you, you know.
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: Go find the other instructors!
 <<else>>
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: Yes, I am the Green Instructor.
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: I have a little riddle for you.
     <<jump SelectRiddle>>
 <<endif>>
@@ -63,12 +69,16 @@ Jan: Hey-Hi! You found me!
 title: YellowInstructor
 ---
 <<set $currentInstructor to "YellowInstructor">>
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Oh, it's you! Hello there.
 <<if $answerredYellowCorrectly == "true">>
     <<if $witnessedConflict == "true">>
         <<if has_item("Player", "Snickers")>>
+            <<run_command "YellowNPCDeny" "SoundPlayer" "PlaySound">>
             Dave: You already got my key!
+            <<run_command "YellowNPCDeny" "SoundPlayer" "PlaySound">>
             Dave: I have no more riddles for you.
+            <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
             Dave: Good luck finding the other instructors!
         <<else>>
             ->Ask about Gerald.
@@ -76,18 +86,24 @@ Dave: Oh, it's you! Hello there.
             ->Ask for the riddle.
         <<endif>>
     <<endif>>
+    <<run_command "YellowNPCDeny" "SoundPlayer" "PlaySound">>
     Dave: You already got my key!
+    <<run_command "YellowNPCDeny" "SoundPlayer" "PlaySound">>
     Dave: I have no more riddles for you.
+    <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
     Dave: Good luck finding the other instructors!
 <<else>>
     <<if $witnessedConflict == "true">>
         ->Ask about Gerald.
             <<jump YellowInstructorConflict>>
         ->Ask for the riddle.
+            <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
             Dave: Are you ready for this riddle?
             <<jump SelectRiddle>>
     <<else>>
+        <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
         Dave: I am the yellow instructor today.
+        <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
         Dave: Are you ready for this riddle?
         <<jump SelectRiddle>>
     <<endif>>
@@ -96,16 +112,23 @@ Dave: Oh, it's you! Hello there.
 
 title: YellowInstructorConflict
 ---
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Oh, did you overhear?
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: I am so sorry about that.
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Gerald just isn't himself today.
+<<run_command "YellowNPCApprove" "SoundPlayer" "PlaySound">>
 Dave: I have an idea.
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Here's a snickers.
 <<give_item "Player" "Snickers">>
 You received a snickers bar.
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Give it to Gerald, will you?
 <<if $answerredYellowCorrectly == "true">>
 <<else>>
+<<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Oh, and let's not forget about the riddle. Here it is.
 <<jump SelectRiddle>>
 <<endif>>
@@ -115,28 +138,38 @@ title: RedInstructor
 ---
 <<if $resolvedConflict == "true">>
     <<if $answerredRedCorrectly == "true">>
+        <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
         Gerald: Hey kid! You already got my key.
+        <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
         Gerald: Go get out of the maze, haha.
     <<else>>
+        <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
         Gerald: Hey kid! Thanks again for the snickers.
+        <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
         Gerald: Are you ready for the riddle? This one is really difficult.
         <<jump SelectRiddle>>
     <<endif>>
 <<else>>
     <<set $currentInstructor to "RedInstructor">>
     <<if $answerredRedCorrectly == "true">>
+        <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
         Gerald: You already got my key, did you forget?
+        <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
         Gerald: Go find the other instructors or something.
     <<else>>
+        <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
         Gerald: Hmph. Took you long enough.
+        <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
         Gerald: Did you get lost or something?
         <<if has_item("Player", "Snickers")>>
             ->Ask if Gerald is okay.
                 <<jump RedInstructorConflict>>
             ->Apologize for getting lost and ask for the riddle.
+                <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
                 Gerald: You better be ready for this riddle.
                 <<jump SelectRiddle>>
         <<else>>
+            <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
             Gerald: You better be ready for this riddle.
             <<jump SelectRiddle>>
         <<endif>>
@@ -146,19 +179,28 @@ title: RedInstructor
 
 title: RedInstructorConflict
 ---
+<<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
 Gerald: Yeah, why wouldn't I be fine?
 ->Tell him Dave wanted him to have this Snickers
     <<set $resolvedConflict to "true">>
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: He thought of me?
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: That's... So nice.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Thank you.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: You know what, in return, you don't have to answer my riddle.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Here's my key!
+    <<run_command "RedNPCTrigger" "SoundPlayer" "PlaySound">>
     You received the Red Key!
     <<give_item "Player" "RedKey">>
     <<set $answerredRedCorrectly to "true">>
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Now go get out of the maze, haha.
 ->Say nothing.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: You better be ready for this riddle.
     <<jump SelectRiddle>>
 ===
@@ -448,16 +490,24 @@ title: CorrectAnswer
 title: WrongAnswer
 ---
 <<if $currentInstructor == "BlueInstructor">>
+    <<run_command "BlueNPCDeny" "SoundPlayer" "PlaySound">>
     Meryl: That was wrong!
+    <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: I have another riddle for you to try again on.
 <<elseif $currentInstructor == "GreenInstructor">>
+    <<run_command "GreenNPCDeny" "SoundPlayer" "PlaySound">>
     Jan: Uh-oh, that was unfortunately not correct.
+    <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: I have another riddle for you to try again, though!
 <<elseif $currentInstructor == "YellowInstructor">>
+    <<run_command "YellowNPCDeny" "SoundPlayer" "PlaySound">>
     Dave: Sorry, but that was wrong.
+    <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
     Dave: Here, please try again with this new riddle.
 <<elseif $currentInstructor == "RedInstructor">>
+    <<run_command "RedNPCDeny" "SoundPlayer" "PlaySound">>
     Gerald: No, no, no. That was wrong.
+    <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Try. Again.
 <<endif>>
 <<jump SelectRiddle>>
@@ -479,6 +529,7 @@ You approach the Blue Door.
     The blue door opens.
     The next door is the green door.
 <<else>>
+    <<run_command "BlueDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
     You seem to need a Blue Key to open this door.
     Maybe you can get it from the Blue Instructor?
@@ -497,6 +548,7 @@ You approach the Green Door.
     The green door opens.
     The next door is the yellow door.
 <<else>>
+    <<run_command "GreenDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
     You seem to need a Green Key to open this door.
     Maybe you can get it from the Green Instructor?
@@ -515,6 +567,7 @@ You approach the Yellow Door.
     The yellow door opens.
     The next door is the red door.
 <<else>>
+    <<run_command "YellowDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
     You seem to need a Yellow Key to open this door.
     Maybe you can get it from the Yellow Instructor?
@@ -533,6 +586,7 @@ You approach the Red Door.
     The red door opens.
     There is no more doors left, find the end!
 <<else>>
+    <<run_command "RedDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
     You seem to need a Red Key to open this door.
     Maybe you can get it from the Red Instructor?

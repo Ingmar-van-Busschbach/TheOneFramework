@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f56c22b6d0c2450d931c5bbed770755, type: 3}
   m_Name: GreenKey
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: e73b3578949e58e48b2f7fab066ff811, type: 3}
+  icon: {fileID: 21300000, guid: 40770b8509d4e43488c02b74814b01d8, type: 3}
