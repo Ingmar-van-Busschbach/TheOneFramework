@@ -600,15 +600,22 @@ You approach the Red Door.
 title: Conflict
 ---
 When you approach the red door, you hear faint shouting in the distance.
+<<run_command "ConflictNPCDeny" "SoundPlayer" "PlaySound">>
 Gerald: I'm done.
+<<run_command "ConflictNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: Don't be too hasty, Gerald.
+<<run_command "ConflictNPCDeny" "SoundPlayer" "PlaySound">>
 Gerald: No. These kids just can't get anything right and it's so frustrating, Dave!
+<<run_command "ConflictNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: But you signed up for this event, and you have to see it through until all the kids-
 Gerald interrupts Dave.
+<<run_command "ConflictNPCQuestion" "SoundPlayer" "PlaySound">>
 Gerald: What are you gonna do? Stop me from walking out of this maze?
+<<run_command "ConflictNPCTalk" "SoundPlayer" "PlaySound">>
 Dave: If I have to, I will. Now get back to your spot, Gerald.
 It's quiet for a moment.
 Gerald: ...
+<<run_command "ConflictNPCDeny" "SoundPlayer" "PlaySound">>
 Gerald: Fine. But I am going to quit after this.
 <<set $witnessedConflict to "true">>
 ===
