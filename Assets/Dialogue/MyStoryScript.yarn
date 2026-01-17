@@ -38,9 +38,9 @@ title: BlueInstructor
     <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Hello!
     <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
-    Meryl: I am the Blue Instructor.
+    Meryl: I am the <color=blue>Blue Instructor</color>.
     <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
-    Meryl: If you get this upcoming riddle correct, I'll give you the blue key.
+    Meryl: If you get this upcoming riddle correct, I'll give you the <color=blue>Blue key</color>.
     <<jump SelectRiddle>>
 <<endif>>
 ===
@@ -59,7 +59,7 @@ Jan: Hey-Hi! You found me!
     Jan: Go find the other instructors!
 <<else>>
     <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
-    Jan: Yes, I am the Green Instructor.
+    Jan: Yes, I am the <color=green>Green Instructor</color>.
     <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: I have a little riddle for you.
     <<jump SelectRiddle>>
@@ -102,7 +102,7 @@ Dave: Oh, it's you! Hello there.
             <<jump SelectRiddle>>
     <<else>>
         <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
-        Dave: I am the yellow instructor today.
+        Dave: I am the <color=yellow>yellow instructor</color> today.
         <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
         Dave: Are you ready for this riddle?
         <<jump SelectRiddle>>
@@ -183,6 +183,7 @@ title: RedInstructorConflict
 Gerald: Yeah, why wouldn't I be fine?
 ->Tell him Dave wanted him to have this Snickers
     <<set $resolvedConflict to "true">>
+    <<take_item "Player" "Snickers">>
     <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: He thought of me?
     <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
@@ -194,7 +195,7 @@ Gerald: Yeah, why wouldn't I be fine?
     <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Here's my key!
     <<run_command "RedNPCTrigger" "SoundPlayer" "PlaySound">>
-    You received the Red Key!
+    You received the <color=red>Red Key</color>!
     <<give_item "Player" "RedKey">>
     <<set $answerredRedCorrectly to "true">>
     <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
@@ -450,7 +451,7 @@ title: CorrectAnswer
     <<run_command "BlueNPCTalk" "SoundPlayer" "PlaySound">>
     Meryl: Here is the key I promised.
     <<run_command "BlueNPCTrigger" "SoundPlayer" "PlaySound">>
-    You received the Blue Key!
+    You received the <color=blue>Blue Key</color>!
     <<give_item "Player" "BlueKey">>
     <<set $answerredBlueCorrectly to "true">>
 <<elseif $currentInstructor == "GreenInstructor">>
@@ -461,7 +462,7 @@ title: CorrectAnswer
     <<run_command "GreenNPCTalk" "SoundPlayer" "PlaySound">>
     Jan: Here's a little somethin.
     <<run_command "GreenNPCTrigger" "SoundPlayer" "PlaySound">>
-    You received the Green Key!
+    You received the <color=green>Green Key</color>!
     <<give_item "Player" "GreenKey">>
     <<set $answerredGreenCorrectly to "true">>
 <<elseif $currentInstructor == "YellowInstructor">>
@@ -472,7 +473,7 @@ title: CorrectAnswer
     <<run_command "YellowNPCTalk" "SoundPlayer" "PlaySound">>
     Dave: Here is the key.
     <<run_command "YellowNPCTrigger" "SoundPlayer" "PlaySound">>
-    You received the Yellow Key!
+    You received the <color=yellow>Yellow Key</color>!
     <<give_item "Player" "YellowKey">>
     <<set $answerredYellowCorrectly to "true">>
 <<elseif $currentInstructor == "RedInstructor">>
@@ -481,7 +482,7 @@ title: CorrectAnswer
     <<run_command "RedNPCTalk" "SoundPlayer" "PlaySound">>
     Gerald: Here. Now don't waste my time further.
     <<run_command "RedNPCTrigger" "SoundPlayer" "PlaySound">>
-    You received the Red Key!
+    You received the <color=red>Red Key</color>!
     <<give_item "Player" "RedKey">>
     <<set $answerredRedCorrectly to "true">>
 <<endif>>
@@ -519,77 +520,77 @@ title: WrongAnswer
 
 title: BlueDoor
 ---
-You approach the Blue Door.
+You approach the <color=blue>Blue Door</color>.
 <<if has_item("Player", "BlueKey")>>
     <<run_command "BlueDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "BlueDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "BlueDoor" "OpenDoor">>
     <<take_item "Player" "BlueKey">>
-    The blue door opens.
-    The next door is the green door.
+    The <color=blue>Blue door</color> opens.
+    The next door is the <color=green>Green door.
 <<else>>
     <<run_command "BlueDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
-    You seem to need a Blue Key to open this door.
-    Maybe you can get it from the Blue Instructor?
+    You seem to need a <color=blue>Blue Key</color> to open this door.
+    Maybe you can get it from the <color=blue>Blue Instructor</color>?
 <<endif>>
 ===
 
 title: GreenDoor
 ---
-You approach the Green Door.
+You approach the <color=green>Green Door</color>.
 <<if has_item("Player", "GreenKey")>>
     <<run_command "GreenDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "GreenDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "GreenDoor" "OpenDoor">>
     <<take_item "Player" "GreenKey">>
-    The green door opens.
-    The next door is the yellow door.
+    The <color=green>Green door</color> opens.
+    The next door is the <color=yellow>Yellow door</color>.
 <<else>>
     <<run_command "GreenDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
-    You seem to need a Green Key to open this door.
-    Maybe you can get it from the Green Instructor?
+    You seem to need a <color=green>Green Key</color> to open this door.
+    Maybe you can get it from the <color=green>Green Instructor</color>?
 <<endif>>
 ===
 
 title: YellowDoor
 ---
-You approach the Yellow Door.
+You approach the <color=yellow>Yellow Door</color>.
 <<if has_item("Player", "YellowKey")>>
     <<run_command "YellowDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "YellowDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "YellowDoor" "OpenDoor">>
     <<take_item "Player" "YellowKey">>
-    The yellow door opens.
-    The next door is the red door.
+    The <color=yellow>Yellow door</color> opens.
+    The next door is the <color=red>Red door</color>.
 <<else>>
     <<run_command "YellowDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
-    You seem to need a Yellow Key to open this door.
-    Maybe you can get it from the Yellow Instructor?
+    You seem to need a <color=yellow>Yellow Key</color> to open this door.
+    Maybe you can get it from the <color=yellow>Yellow Instructor</color>?
 <<endif>>
 ===
 
 title: RedDoor
 ---
-You approach the Red Door.
+You approach the <color=red>Red Door</color>.
 <<if has_item("Player", "RedKey")>>
     <<run_command "RedDoorTrigger" "SoundPlayer" "PlaySound">>
     You have the key!
     <<run_command "RedDoor" "SoundPlayer" "PlaySound">>
     <<play_animation "RedDoor" "OpenDoor">>
     <<take_item "Player" "RedKey">>
-    The red door opens.
+    The <color=red>Red door</color> opens.
     There is no more doors left, find the end!
 <<else>>
     <<run_command "RedDoorLocked" "SoundPlayer" "PlaySound">>
     The door is locked.
-    You seem to need a Red Key to open this door.
-    Maybe you can get it from the Red Instructor?
+    You seem to need a <color=red>Red Key</color> to open this door.
+    Maybe you can get it from the <color=red>Red Instructor</color>?
 <<endif>>
 ===
 
